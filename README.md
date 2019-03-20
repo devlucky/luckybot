@@ -1,2 +1,9 @@
-# luckyboot
-Opinionated Instagram automation tool
+# luckybot
+> Opinionated Instagram automation tool
+
+
+### Install
+
+```
+$ yarn add luckybot
+```
