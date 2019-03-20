@@ -8,11 +8,14 @@
   "types": "dist/es5/index.d.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
-    "build": "tsc",
+    "build:es5": "tsc --project build/tsconfig.es5.json",
+    "build:es2015": "tsc --project build/tsconfig.es2015.json",
+    "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
     "test": "jest"
   },
   "dependencies": {
-    "puppeteer": "^1.13.0"
+    "puppeteer": "^1.13.0",
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
     "@types/puppeteer": "^1.12.3",
