@@ -7,7 +7,7 @@
   "module": "dist/es2015/index.js",
   "types": "dist/es5/index.d.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly ./example/index.ts",
     "build:es5": "tsc --project build/tsconfig.es5.json",
     "build:es2015": "tsc --project build/tsconfig.es2015.json",
     "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
