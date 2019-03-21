@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "../example/dist",
+    "target": "es5",
+  },
+  "extends": "../tsconfig.json",
+  "include": ["../example/index.ts"]
+}

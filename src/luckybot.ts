@@ -1,7 +1,7 @@
 import { Browser } from "./browser";
 
 export interface BotOptions {
-  
+  debug?: boolean;  
 } 
 
 export interface LikeOptions {
@@ -16,20 +16,19 @@ export class LuckyBot {
   constructor(userName: string, password: string, options?: BotOptions) {
     this.userName = userName;
     this.password = password;
-    this.browser = new Browser();
+    this.browser = new Browser(options);
   }
   
-  async like(hashtag: string, options?: LikeOptions): Promise<void> {
-
-  }
-
   async login(): Promise<void> {
     const {browser, userName, password} = this;
     await browser.login(userName, password);
   }
 
-  async getPhotos(hashtag: string) {
-    const {browser} = this;
-    await browser.getPhotos(hashtag);
+  async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
+    await this.browser.likePhotos(hashtag, options);
+  }
+
+  async close() {
+    await this.browser.close();
   }
 }

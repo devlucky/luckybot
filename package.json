@@ -11,6 +11,7 @@
     "build:es5": "tsc --project build/tsconfig.es5.json",
     "build:es2015": "tsc --project build/tsconfig.es2015.json",
     "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
+    "build:example": "rm -rf example/dist && tsc --project build/tsconfig.example.json",
     "test": "jest"
   },
   "dependencies": {
