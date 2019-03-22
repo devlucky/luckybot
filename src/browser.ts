@@ -19,7 +19,7 @@ export class Browser {
     this.options = options || {debug: false};
   }
 
-  async createPage() {
+  private async createPage() {
     const browser = await puppeteer.launch({ headless: !this.options.debug });
     const page = await browser.newPage();
     const userAgent = await browser.userAgent();
@@ -32,7 +32,7 @@ export class Browser {
     return page;
   }
 
-  getPage(): Promise<Page> {
+  private getPage(): Promise<Page> {
     const {page} = this;
 
     if (page) return Promise.resolve(page);
@@ -63,7 +63,7 @@ export class Browser {
     this.isLoggedIn = true;
   }
 
-  async getPhotos(hashtag: string) {
+  private async getPhotos(hashtag: string) {
     const page = await this.getPage();
 
     await page.goto(`${host}/explore/tags/${hashtag}/`);
@@ -73,14 +73,14 @@ export class Browser {
     return photos;
   }
 
-  async esc() {
+  private async esc() {
     const page = await this.getPage();
     await sleep(1000);
     await page.keyboard.press('Escape');
     await sleep(1000);
   }
 
-  async closePhotoDetail() {
+  private async closePhotoDetail() {
     const page = await this.getPage();
     await sleep(1000);
     // TODO: make generic + move somewhere else
@@ -98,7 +98,7 @@ export class Browser {
   }
 
   // TODO: return boolean liked?
-  async likePhoto(photo: ElementHandle<Element>, delay: number): Promise<void> {
+  private async likePhoto(photo: ElementHandle<Element>, delay: number): Promise<void> {
     const page = await this.getPage();
 
     await sleep(delay);

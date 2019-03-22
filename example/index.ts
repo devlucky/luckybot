@@ -1,6 +1,7 @@
 import LuckyBot from '../src';
 
-(async () => {
+const ninetyMin = 90 * 60 * 1000;
+const run = async () => {
   const user = process.env.LUCKYBOT_USER;
   const pass = process.env.LUCKYBOT_PASS;
   const hastag = process.env.LUCKYBOT_HASTAG || 'nepaltravel';
@@ -17,4 +18,7 @@ import LuckyBot from '../src';
   await bot.likePhotos(hastag, {maxLikes: 5});
   console.log('CLOSE...')
   await bot.close();
-})();
+};
+
+run();
+setInterval(run, ninetyMin)
