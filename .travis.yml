@@ -1,0 +1,10 @@
+
+language: node_js
+node_js:
+  - '8'
+cache: yarn
+script:
+  - yarn
+  - yarn typecheck
+notifications:
+  email: false
