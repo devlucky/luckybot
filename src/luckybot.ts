@@ -1,9 +1,5 @@
 import { Scraper } from "./strategies/scraper";
 
-export interface BotOptions {
-  debug?: boolean;  
-} 
-
 export interface LikeOptions {
   maxLikes?: number;
 }
