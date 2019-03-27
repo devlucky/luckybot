@@ -1,4 +1,4 @@
-import { Browser } from "./browser";
+import { Scraper } from "./strategies/scraper";
 
 export interface BotOptions {
   debug?: boolean;  
@@ -11,24 +11,24 @@ export interface LikeOptions {
 export class LuckyBot {
   userName: string;
   password: string;
-  browser: Browser;
+  scraper: Scraper;
 
-  constructor(userName: string, password: string, options?: BotOptions) {
+  constructor(userName: string, password: string) {
     this.userName = userName;
     this.password = password;
-    this.browser = new Browser(options);
+    this.scraper = new Scraper();
   }
   
   async login(): Promise<void> {
-    const {browser, userName, password} = this;
-    await browser.login(userName, password);
+    const {scraper, userName, password} = this;
+    await scraper.login(userName, password);
   }
 
   async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
-    await this.browser.likePhotos(hashtag, options);
+    await this.scraper.likePhotos(hashtag, options);
   }
 
   async close() {
-    await this.browser.close();
+    await this.scraper.close();
   }
 }

@@ -12,6 +12,7 @@
     "build:es2015": "tsc --project build/tsconfig.es2015.json",
     "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
     "build:example": "rm -rf example/dist && tsc --project build/tsconfig.example.json",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "jest"
   },
   "dependencies": {
@@ -23,6 +24,9 @@
     "jest": "^24.5.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.3.4000"
+  },
+  "engines": {
+    "node": ">=8.5.0"
   },
   "repository": "git@github.com:devlucky/luckybot.git",
   "author": "devlucky",
