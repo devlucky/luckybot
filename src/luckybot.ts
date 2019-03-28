@@ -1,30 +1,49 @@
 import { Scraper } from "./strategies/scraper";
+import { RestApi } from "./strategies/api";
 
 export interface LikeOptions {
-  maxLikes?: number;
+  maxLikes?: number
+}
+
+export interface Strategy {
+  login(userName: string, password: string): Promise<void>
+  likePhotos(hashtag: string, options?: LikeOptions): Promise<void>
+  close(): Promise<void>
+}
+
+export enum StrategyType {
+  PrivateAPIs = 0,
+  Scraping = 1,
 }
 
 export class LuckyBot {
-  userName: string;
-  password: string;
-  scraper: Scraper;
+  userName: string
+  password: string
+  strategy: Strategy
 
-  constructor(userName: string, password: string) {
-    this.userName = userName;
-    this.password = password;
-    this.scraper = new Scraper();
+  constructor(userName: string, password: string, strategyType: StrategyType = StrategyType.Scraping) {
+    this.userName = userName
+    this.password = password
+    this.strategy = (function(strategyType) {  
+      switch(strategyType) {
+        case StrategyType.PrivateAPIs:
+          return new RestApi()
+        case StrategyType.Scraping:
+          return new Scraper()
+      }
+    })(strategyType)
   }
   
   async login(): Promise<void> {
-    const {scraper, userName, password} = this;
-    await scraper.login(userName, password);
+    const {strategy, userName, password} = this
+    await strategy.login(userName, password)
   }
 
   async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
-    await this.scraper.likePhotos(hashtag, options);
+    await this.strategy.likePhotos(hashtag, options)
   }
 
   async close() {
-    await this.scraper.close();
+    await this.strategy.close()
   }
 }

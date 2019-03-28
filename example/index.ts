@@ -1,16 +1,11 @@
-import LuckyBot from '../src';
+import LuckyBot, { StrategyType } from '../src';
 
 const ninetyMin = 90 * 60 * 1000;
 const run = async () => {
-  const user = process.env.LUCKYBOT_USER;
-  const pass = process.env.LUCKYBOT_PASS;
+  const user = 'ma';
+  const pass = 'mmmm';
   const hastag = process.env.LUCKYBOT_HASTAG || 'nepaltravel';
-
-  if (!user || !pass) {
-    throw new Error('No username or password')
-  }
-  
-  const bot = new LuckyBot(user, pass);
+  const bot = new LuckyBot(user, pass, StrategyType.PrivateAPIs);
 
   console.log('LOGIN...')
   await bot.login();
