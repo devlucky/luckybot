@@ -1,5 +1,4 @@
-import puppeteer, { Browser } from 'puppeteer';
-import { Page } from "puppeteer";
+import puppeteer, { Browser, Page } from 'puppeteer';
 import { DEBUG } from './config';
 
 export class PageProvider {

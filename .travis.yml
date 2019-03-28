@@ -6,5 +6,6 @@ cache: yarn
 script:
   - yarn
   - yarn typecheck
+  - yarn test
 notifications:
   email: false

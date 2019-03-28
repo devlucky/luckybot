@@ -13,13 +13,14 @@
     "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
     "build:example": "rm -rf example/dist && tsc --project build/tsconfig.example.json",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "jest"
+    "test": "jest -c ./build/jest.config.js"
   },
   "dependencies": {
     "puppeteer": "^1.13.0",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.11",
     "@types/puppeteer": "^1.12.3",
     "jest": "^24.5.0",
     "ts-node-dev": "^1.0.0-pre.32",
