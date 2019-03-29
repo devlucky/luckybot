@@ -7,7 +7,7 @@ describe('Session', () => {
   it('should go to login page and login', async () => {
     const session = new Session();
     const pageProvider = mockPageProvider();
-    session.pageProvider = pageProvider;
+    (session as any).pageProvider = pageProvider;
 
     const sessionCookies = await session.login('username', 'some-pass');
 
