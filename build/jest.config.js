@@ -13,7 +13,7 @@ module.exports = {
   },
   rootDir: absPath('..'),
   testMatch: [
-    '**/__tests__/*.(ts|tsx)'
+    '**/__tests__/*.spec.(ts|tsx)'
   ],
   resetMocks: true
 };
