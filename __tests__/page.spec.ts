@@ -1,4 +1,3 @@
-jest.mock('puppeteer');
 import { PageProvider } from "../src/page";
 
 describe('PageProvider', () => {

@@ -1,5 +1,4 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
-import { DEBUG } from './config';
 
 export class PageProvider {
   // those need to be static since we don't want to have multiple pages at the same time
@@ -7,7 +6,7 @@ export class PageProvider {
   static browser?: Browser;
   
   private async createPage() {
-    const browser = await puppeteer.launch({ headless: !DEBUG });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     const userAgent = await browser.userAgent();
 
