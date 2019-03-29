@@ -8,6 +8,18 @@
 $ yarn add luckybot
 ```
 
+### Usage
+
+```typescript
+import LuckyBot from 'luckybot'
+
+const bot = new LuckyBot('my_user', 'password');
+
+await bot.login();
+await bot.likePhotos('travel', {maxLikes: 50});
+await bot.close();
+```
+
 ### Development
 
 **install dependencies**
@@ -32,4 +44,16 @@ $ yarn typecheck
 
 ```
 $ yarn build
+```
+
+**tests**
+
+```
+$ yarn test
+```
+
+Watch mode
+
+```
+$ yarn test --watch
 ```

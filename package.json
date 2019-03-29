@@ -13,7 +13,8 @@
     "build": "rm -rf dist && yarn build:es5 && yarn build:es2015",
     "build:example": "rm -rf example/dist && tsc --project build/tsconfig.example.json",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "jest -c build/jest.config.js --forceExit"
+    "test": "jest -c build/jest.config.js --forceExit",
+    "release": "npm version patch && git push --tags && git push && npm publish"
   },
   "dependencies": {
     "puppeteer": "^1.13.0",
