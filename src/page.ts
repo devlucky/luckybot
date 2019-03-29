@@ -30,7 +30,7 @@ export class PageProvider {
   async close() {
     const {page, browser} = PageProvider;
     
-    page && await page.close()
+    page && !page.isClosed() && await page.close();
     browser && await browser.close()
   }
 }
