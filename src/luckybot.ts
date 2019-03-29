@@ -1,17 +1,30 @@
-export interface BotOptions {
-  
-} 
+import { Scraper } from "./strategies/scraper";
 
 export interface LikeOptions {
   maxLikes?: number;
 }
 
 export class LuckyBot {
-  constructor(userName: string, password: string, options?: BotOptions) {
+  userName: string;
+  password: string;
+  scraper: Scraper;
 
+  constructor(userName: string, password: string) {
+    this.userName = userName;
+    this.password = password;
+    this.scraper = new Scraper();
   }
   
-  async like(hashtag: string, options?: LikeOptions): Promise<void> {
+  async login(): Promise<void> {
+    const {scraper, userName, password} = this;
+    await scraper.login(userName, password);
+  }
 
+  async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
+    await this.scraper.likePhotos(hashtag, options);
+  }
+
+  async close() {
+    await this.scraper.close();
   }
 }
