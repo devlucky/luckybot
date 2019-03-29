@@ -7,5 +7,7 @@ describe('PageProvider', () => {
     const pageB = await pageProvider.getPage();
     
     expect(pageA).toEqual(pageB);
+    await pageA.close();
+    await pageB.close();
   })
 });
