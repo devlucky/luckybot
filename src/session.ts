@@ -2,13 +2,17 @@ import { Page, Cookie } from "puppeteer";
 import { HOST } from "./config";
 import { PageProvider } from "./page";
 
+export interface SessionOptions {
+  debug?: boolean;
+}
+
 export class Session {
   isLoggedIn: boolean = false;
   pageProvider: PageProvider;
   page?: Page;
 
-  constructor() {
-    this.pageProvider = new PageProvider();
+  constructor(options: SessionOptions = {}) {
+    this.pageProvider = new PageProvider(options);
   }
 
   async login(userName: string, password: string): Promise<Cookie[]> {

@@ -5,14 +5,20 @@ import { PageProvider } from '../page'
 import { HOST } from '../config';
 import { Session } from '../session';
 
+export interface ScraperOptions {
+  debug?: boolean; 
+}
+
 export class Scraper {
   isLoggedIn: boolean = false;
   pageProvider: PageProvider;
   session: Session;
+  options: ScraperOptions;
 
-  constructor() {
-    this.pageProvider = new PageProvider();
-    this.session = new Session();
+  constructor(options: ScraperOptions = {}) {
+    this.options = options;
+    this.pageProvider = new PageProvider(options);
+    this.session = new Session(options);
   }
 
   async login(userName: string, password: string) {

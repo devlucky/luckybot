@@ -1,5 +1,9 @@
 import { Scraper } from "./strategies/scraper";
 
+export interface LuckyBotOptions {
+  debug?: boolean;
+}
+
 export interface LikeOptions {
   maxLikes?: number;
 }
@@ -8,11 +12,13 @@ export class LuckyBot {
   userName: string;
   password: string;
   scraper: Scraper;
+  options: LuckyBotOptions;
 
-  constructor(userName: string, password: string) {
+  constructor(userName: string, password: string, options: LuckyBotOptions = {}) {
     this.userName = userName;
     this.password = password;
-    this.scraper = new Scraper();
+    this.options = options;
+    this.scraper = new Scraper(options);
   }
   
   async login(): Promise<void> {

@@ -10,7 +10,7 @@ const run = async () => {
     throw new Error('No username or password')
   }
   
-  const bot = new LuckyBot(user, pass);
+  const bot = new LuckyBot(user, pass, {debug: true});
 
   console.log('LOGIN...')
   await bot.login();
