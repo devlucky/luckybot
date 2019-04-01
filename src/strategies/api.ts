@@ -10,7 +10,7 @@ export interface Media {
 }
 
 export class RestApi implements Strategy {
-  session?: any;
+  session?: Object;
 
   constructor() {
 
