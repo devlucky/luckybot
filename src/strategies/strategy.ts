@@ -4,6 +4,6 @@ export interface LikeOptions {
 
 export interface Strategy {
   login(userName: string, password: string): Promise<void>;
-  likePhotos(hashtag: string, options?: LikeOptions): Promise<void>;
+  likeMedias(hashtag: string, options?: LikeOptions): Promise<void>;
   close(): Promise<void>;
 }

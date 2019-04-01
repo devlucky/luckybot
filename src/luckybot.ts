@@ -1,4 +1,3 @@
-import { Scraper } from "./strategies/scraper";
 import { Strategy } from "./strategies/strategy";
 import { RestApi } from "./strategies/api";
 
@@ -20,7 +19,6 @@ export class LuckyBot {
     this.userName = userName;
     this.password = password;
     this.options = options;
-    // this.client = new Scraper(options);
     this.client = new RestApi();
   }
   
@@ -30,7 +28,7 @@ export class LuckyBot {
   }
 
   async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
-    await this.client.likePhotos(hashtag, options);
+    await this.client.likeMedias(hashtag, options);
   }
 
   async close() {

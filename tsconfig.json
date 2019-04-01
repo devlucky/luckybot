@@ -8,5 +8,8 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true
-  }
+  },
+  "files": [
+    "./custom-typings/instagram-private-api.d.ts"
+  ]
 }
