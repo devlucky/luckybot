@@ -19,6 +19,7 @@
     "prepublishOnly": "yarn clean && yarn build"
   },
   "dependencies": {
+    "instagram-private-api": "^0.6.8",
     "puppeteer": "^1.13.0",
     "tslib": "^1.9.3"
   },
