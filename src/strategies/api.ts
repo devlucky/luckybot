@@ -35,6 +35,7 @@ export class RestApi implements Strategy {
     }))
   };
 
+  // TODO: potentially return which medias have been liked
   async likeMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<void> {
     const {maxLikes} = options;
     console.log('likeMedias', hashtag, maxLikes)
@@ -46,11 +47,14 @@ export class RestApi implements Strategy {
     await Promise.all(likedPhotos);
   };
 
-
   async likeMedia(media: Media, delay: number) {
-    await sleep(delay);
-    console.log('likeMedia', media.id, media.webLink);
-    await Client.Like.create(this.session, media.id);
+    try {
+      await sleep(delay);
+      console.log('likeMedia', media.id, media.webLink);
+      await Client.Like.create(this.session, media.id);
+    } catch (e) {
+      
+    }
   }
 
   async close() {
