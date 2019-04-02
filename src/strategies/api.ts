@@ -1,13 +1,8 @@
 import InstagramClient from 'instagram-private-api';
-import { Strategy, LikeOptions } from "./strategy";
+import { Strategy, LikeOptions, Media } from "./strategy";
 import { sleep } from '../util/sleep';
 
 const Client = InstagramClient.V1;
-
-export interface Media {
-  id: string;
-  webLink: string;
-}
 
 export class RestApi implements Strategy {
   session?: Object;
@@ -16,12 +11,14 @@ export class RestApi implements Strategy {
 
   }
 
-  async login(userName: string, password: string): Promise<void> {
+  async login(userName: string, password: string): Promise<Object> {
     const device = new Client.Device(userName);
     const storage = new Client.CookieFileStorage(`${__dirname}/${userName}.json`);
-    const session = await Client.Session.create(device, storage, userName, password)
+    const session: Object = await Client.Session.create(device, storage, userName, password)
 
     this.session = session;
+
+    return session;
   }
 
   async search(hashtag: string): Promise<Media[]> {
@@ -35,25 +32,27 @@ export class RestApi implements Strategy {
     }))
   };
 
-  // TODO: potentially return which medias have been liked
-  async likeMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<void> {
+  async likeMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<Media[]> {
     const {maxLikes} = options;
-    console.log('likeMedias', hashtag, maxLikes)
     const results = await this.search(hashtag);
-    const likedPhotos = results.slice(0, maxLikes).map((media, index) => {
+    console.log('likeMedias', {hashtag, length: results.length, maxLikes})
+    const likeMediaPromises = results.slice(0, maxLikes).map((media, index) => {
       return this.likeMedia(media, index * 15000);
     });
 
-    await Promise.all(likedPhotos);
+    const likedMedia = await Promise.all(likeMediaPromises);
+
+    return likedMedia;
   };
 
-  async likeMedia(media: Media, delay: number) {
+  async likeMedia(media: Media, delay: number): Promise<Media> {
     try {
       await sleep(delay);
       console.log('likeMedia', media.id, media.webLink);
       await Client.Like.create(this.session, media.id);
+      return media;
     } catch (e) {
-      
+      console.log('error liking media', media)
     }
   }
 
