@@ -14,11 +14,13 @@
     "build:example": "rm -rf example/dist && tsc --project build/tsconfig.example.json",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "jest -c build/jest.config.js --forceExit",
+    "test:watch": "yarn test --watch",
     "release": "npm version patch && git push --tags && git push && npm publish",
     "clean": "rm -rf dist",
     "prepublishOnly": "yarn clean && yarn build"
   },
   "dependencies": {
+    "instagram-private-api": "^0.6.8",
     "puppeteer": "^1.13.0",
     "tslib": "^1.9.3"
   },
