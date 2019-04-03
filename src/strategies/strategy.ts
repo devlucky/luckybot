@@ -7,6 +7,10 @@ export interface LikeOptions {
   maxLikes?: number;
 }
 
+export interface StrategyOptions {
+  cookiePath?: string;
+}
+
 export interface Strategy {
   login(userName: string, password: string): Promise<Object>;
   likeMedias(hashtag: string, options?: LikeOptions): Promise<Media[]>;

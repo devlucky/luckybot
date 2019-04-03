@@ -61,5 +61,6 @@ typings/
 .next
 src/*.js
 src/**/*.json
+example/**/*.json
 dist
 debug.png

@@ -3,6 +3,7 @@ import { RestApi } from "./strategies/api";
 
 export interface LuckyBotOptions {
   debug?: boolean;
+  cookiePath?: string;
 }
 
 export interface LikeOptions {
@@ -19,7 +20,7 @@ export class LuckyBot {
     this.userName = userName;
     this.password = password;
     this.options = options;
-    this.client = new RestApi();
+    this.client = new RestApi(options);
   }
   
   async login(): Promise<void> {

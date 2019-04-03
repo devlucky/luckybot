@@ -1,20 +1,22 @@
 import InstagramClient from 'instagram-private-api';
 import {existsSync} from 'fs';
-import { Strategy, LikeOptions, Media } from "./strategy";
+import { Strategy, LikeOptions, Media, StrategyOptions } from "./strategy";
 import { sleep } from '../util/sleep';
 
 const Client = InstagramClient.V1;
 
+// TODO: move session logic into Session class
 export class RestApi implements Strategy {
   session?: Object;
+  options: StrategyOptions;
 
-  constructor() {
-
+  constructor(options?: StrategyOptions) {
+    this.options = options || {cookiePath: __dirname};
   }
 
   async login(userName: string, password: string): Promise<Object> {
     const device = new Client.Device(userName);
-    const cookiePath = `${__dirname}/${userName}.json`
+    const cookiePath = `${this.options.cookiePath}/${userName}.json`
     console.log('login: exist cookie', {cookiePath}, existsSync(cookiePath))
     const storage = new Client.CookieFileStorage(cookiePath);
     const session: Object = await Client.Session.create(device, storage, userName, password)

@@ -41,7 +41,16 @@ describe('Api Strategy', () => {
         'some-pass'
       )
       expect(session).toEqual(sessionValue)
-    })
+    });
+
+    it('should use given cookiePath', async () => {
+      setup();
+      const api = new RestApi({cookiePath: 'some-folder'});
+      await api.login('some-user', 'some-pass');
+
+      expect(InstagramClient.V1.CookieFileStorage).toBeCalledTimes(1)
+      expect(InstagramClient.V1.CookieFileStorage).toBeCalledWith('some-folder/some-user.json')
+    });
   });
 
   describe('likeMedias()', () => {

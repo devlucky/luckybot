@@ -9,8 +9,9 @@ const run = async () => {
   if (!user || !pass) {
     throw new Error('No username or password')
   }
-  
-  const bot = new LuckyBot(user, pass, {debug: true});
+
+  const cookiePath = `${__dirname}/cookies`;
+  const bot = new LuckyBot(user, pass, {debug: true, cookiePath});
 
   console.log('LOGIN...')
   await bot.login();
