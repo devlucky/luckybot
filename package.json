@@ -1,6 +1,6 @@
 {
   "name": "luckybot",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Opinionated Instagram automation tool",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/es2015/index.js",
