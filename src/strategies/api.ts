@@ -56,6 +56,7 @@ export class RestApi implements Strategy {
       return media;
     } catch (e) {
       console.log('error liking media', media)
+      return media;
     }
   }
 
