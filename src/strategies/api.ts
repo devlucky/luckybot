@@ -15,7 +15,7 @@ export class RestApi implements Strategy {
   async login(userName: string, password: string): Promise<Object> {
     const device = new Client.Device(userName);
     const cookiePath = `${__dirname}/${userName}.json`
-    console.log('login: exist cookie', existsSync(cookiePath))
+    console.log('login: exist cookie', {cookiePath}, existsSync(cookiePath))
     const storage = new Client.CookieFileStorage(cookiePath);
     const session: Object = await Client.Session.create(device, storage, userName, password)
 
