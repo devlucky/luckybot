@@ -1,6 +1,6 @@
 import InstagramClient from 'instagram-private-api';
 import {existsSync} from 'fs';
-import { Strategy, LikeOptions, Media, StrategyOptions } from "./strategy";
+import { Strategy, LikeOptions, Media, StrategyOptions, MediaLocation } from "./strategy";
 import { sleep } from '../util/sleep';
 
 const Client = InstagramClient.V1;
@@ -36,6 +36,26 @@ export class RestApi implements Strategy {
       webLink: result._params.webLink
     }))
   };
+
+  async searchLocation(query: string) {
+    const {session} = this;
+    const locations = await Client.Location.search(session, query);
+
+    return locations.map(location => {
+      return {
+        id: location.id,
+        title: location.params.title
+      }
+    });
+  }
+
+  async searchMediaByLocation(location: MediaLocation): Promise<Media[]> {
+    const {session} = this;
+    const medias = new Client.Feed.LocationMedia(session, location.id);
+    const results = await medias.get();
+
+    return results;
+  }
 
   async likeMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<Media[]> {
     const {maxLikes} = options;
