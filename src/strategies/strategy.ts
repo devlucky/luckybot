@@ -16,10 +16,17 @@ export interface MediaLocation {
   title: string;
 }
 
+export interface User {
+  id: string;
+  username: string;
+  isPrivate: boolean;
+}
+
 export interface Strategy {
   login(userName: string, password: string): Promise<Object>;
   likeMedias(hashtag: string, options?: LikeOptions): Promise<Media[]>;
   searchLocation(query: string): Promise<MediaLocation>;
-  searchMediaByLocation(location: MediaLocation): Promise<Media[]>
+  searchMediaByLocation(location: MediaLocation): Promise<Media[]>;
+  getFollowers(accountId: string): Promise<User[]>;
   close(): Promise<void>;
 }

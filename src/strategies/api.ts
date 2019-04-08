@@ -41,7 +41,7 @@ export class RestApi implements Strategy {
     const {session} = this;
     const locations = await Client.Location.search(session, query);
 
-    return locations.map(location => {
+    return locations.map((location: any) => {
       return {
         id: location.id,
         title: location.params.title
@@ -69,6 +69,20 @@ export class RestApi implements Strategy {
 
     return likedMedia;
   };
+
+  async getFollowers(accountId: string) {
+    const {session} = this;
+    const accountFollowers = new Client.Feed.AccountFollowers(session, accountId); //'5465909933'
+    const followers = await accountFollowers.get();
+
+    return followers.map((follower: any) => {
+      return {
+        id: follower.id,
+        username: follower.params.username,
+        isPrivate: follower.params.isPrivate
+      }
+    })
+  }
 
   async likeMedia(media: Media, delay: number): Promise<Media> {
     try {

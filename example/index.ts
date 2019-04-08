@@ -13,13 +13,14 @@ const run = async () => {
   const cookiePath = `${__dirname}/cookies`;
   const bot = new LuckyBot(user, pass, {debug: true, cookiePath});
 
-  console.log('LOGIN...')
   await bot.login();
-  console.log('LIKING PHOTOS...')
   await bot.likePhotos(hastag, {maxLikes: 5});
-  console.log('CLOSE...')
   await bot.close();
 };
 
+const likeFollowersPhotos = async (bot: LuckyBot) => {
+  const followers = await bot.getFollowers('');
+  console.log(followers);
+}
+
 run();
-setInterval(run, ninetyMin)

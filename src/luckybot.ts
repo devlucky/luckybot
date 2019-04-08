@@ -40,6 +40,10 @@ export class LuckyBot {
     return this.client.searchMediaByLocation(location);
   }
 
+  async getFollowers(accountId: string) {
+    return this.client.getFollowers(accountId);
+  }
+
   async close() {
     await this.client.close();
   }
