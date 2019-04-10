@@ -7,6 +7,11 @@ export interface LikeOptions {
   maxLikes?: number;
 }
 
+export interface LikeFollowerOptions {
+  maxLikes?: number;
+  maxFollowers?: number;
+}
+
 export interface StrategyOptions {
   cookiePath?: string;
 }
@@ -24,9 +29,10 @@ export interface User {
 
 export interface Strategy {
   login(userName: string, password: string): Promise<Object>;
-  likeMedias(hashtag: string, options?: LikeOptions): Promise<Media[]>;
+  likeTaggedMedias(hashtag: string, options?: LikeOptions): Promise<Media[]>;
   searchLocation(query: string): Promise<MediaLocation>;
   searchMediaByLocation(location: MediaLocation): Promise<Media[]>;
   getFollowers(accountId: string): Promise<User[]>;
+  likeFollowersPhotos(accountId: string, options?: LikeFollowerOptions): Promise<Media[]>;
   close(): Promise<void>;
 }

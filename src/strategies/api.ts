@@ -1,9 +1,16 @@
 import InstagramClient from 'instagram-private-api';
 import {existsSync} from 'fs';
-import { Strategy, LikeOptions, Media, StrategyOptions, MediaLocation } from "./strategy";
+import { Strategy, LikeOptions, Media, StrategyOptions, MediaLocation, User, LikeFollowerOptions } from "./strategy";
 import { sleep } from '../util/sleep';
 
 const Client = InstagramClient.V1;
+
+const feedResultsToMedia = (results: any[]): Media[] => {
+  return results.map((result: any) => ({
+    id: result.id,
+    webLink: result._params.webLink
+  }))
+}
 
 // TODO: move session logic into Session class
 export class RestApi implements Strategy {
@@ -31,10 +38,7 @@ export class RestApi implements Strategy {
     const taggedMedia = new Client.Feed.TaggedMedia(session, hashtag);
     const results = await taggedMedia.get();
 
-    return results.map((result: any) => ({
-      id: result.id,
-      webLink: result._params.webLink
-    }))
+    return feedResultsToMedia(results);
   };
 
   async searchLocation(query: string) {
@@ -57,20 +61,15 @@ export class RestApi implements Strategy {
     return results;
   }
 
-  async likeMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<Media[]> {
+  async likeTaggedMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<Media[]> {
     const {maxLikes} = options;
-    const results = await this.search(hashtag);
-    console.log('likeMedias', {hashtag, length: results.length, maxLikes})
-    const likeMediaPromises = results.slice(0, maxLikes).map((media, index) => {
-      return this.likeMedia(media, index * 15000);
-    });
+    const medias = await this.search(hashtag);
+    console.log('likeMedias', {hashtag, length: medias.length, maxLikes})
 
-    const likedMedia = await Promise.all(likeMediaPromises);
-
-    return likedMedia;
+    return this.likeMedias(medias, maxLikes);
   };
 
-  async getFollowers(accountId: string) {
+  async getFollowers(accountId: string): Promise<User[]> {
     const {session} = this;
     const accountFollowers = new Client.Feed.AccountFollowers(session, accountId); //'5465909933'
     const followers = await accountFollowers.get();
@@ -84,6 +83,15 @@ export class RestApi implements Strategy {
     })
   }
 
+  private async likeMedias(medias: Media[], maxLikes: number): Promise<Media[]> {
+    const likeMediaPromises = medias.slice(0, maxLikes).map((media, index) => {
+      return this.likeMedia(media, index * 15000);
+    });
+    const likedMedias = await Promise.all(likeMediaPromises);
+    
+    return likedMedias;
+  }
+
   async likeMedia(media: Media, delay: number): Promise<Media> {
     try {
       await sleep(delay);
@@ -94,6 +102,28 @@ export class RestApi implements Strategy {
       console.log('error liking media', media)
       return media;
     }
+  }
+
+  async likeFollowersPhotos(accountId: string, options?: LikeFollowerOptions): Promise<Media[]> {
+    const {maxLikes, maxFollowers} = {maxLikes: 5, maxFollowers: 3, ...options};
+    const {session} = this;
+    const totalLikedMedia = [];
+    const publicFollowers = (await this.getFollowers(accountId)).filter(follower => !follower.isPrivate)
+    const followers = publicFollowers.slice(0, maxFollowers);
+    
+    console.log('likeFollowersPhotos', {accountId, maxLikes, maxFollowers, publicFollowersLength: publicFollowers.length});
+
+    for (const follower of followers) {
+      console.log('likeFollowersPhotos', {follower})
+      const userMedia = new Client.Feed.UserMedia(session, follower.id);
+      const feed = await userMedia.get();
+      const medias = feedResultsToMedia(feed);
+      const likedMedia = await this.likeMedias(medias, maxLikes);
+
+      totalLikedMedia.push(likedMedia);
+    }   
+
+    return totalLikedMedia;
   }
 
   async close() {

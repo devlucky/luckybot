@@ -1,4 +1,4 @@
-import { Strategy, MediaLocation } from "./strategies/strategy";
+import { Strategy, MediaLocation, LikeFollowerOptions } from "./strategies/strategy";
 import { RestApi } from "./strategies/api";
 
 export interface LuckyBotOptions {
@@ -29,7 +29,7 @@ export class LuckyBot {
   }
 
   async likePhotos(hashtag: string, options: LikeOptions = {maxLikes: 50}) {
-    await this.client.likeMedias(hashtag, options);
+    await this.client.likeTaggedMedias(hashtag, options);
   }
 
   async searchLocation(query: string) {
@@ -42,6 +42,10 @@ export class LuckyBot {
 
   async getFollowers(accountId: string) {
     return this.client.getFollowers(accountId);
+  }
+
+  async likeFollowersPhotos(accountId: string, options: LikeFollowerOptions) {
+    return this.client.likeFollowersPhotos(accountId, options);
   }
 
   async close() {
