@@ -1,4 +1,4 @@
-import { Strategy, MediaLocation, LikeFollowerOptions } from "./strategies/strategy";
+import { Strategy, MediaLocation, LikeFollowerOptions, User } from "./strategies/strategy";
 import { RestApi } from "./strategies/api";
 
 export interface LuckyBotOptions {
@@ -47,6 +47,10 @@ export class LuckyBot {
   async likeFollowersPhotos(accountId: string, options: LikeFollowerOptions) {
     return this.client.likeFollowersPhotos(accountId, options);
   }
+
+  async getUser(username: string): Promise<User> {
+    return this.client.getUser(username);
+  };
 
   async close() {
     await this.client.close();

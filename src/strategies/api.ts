@@ -126,6 +126,18 @@ export class RestApi implements Strategy {
     return totalLikedMedia;
   }
 
+  async getUser(username: string): Promise<User> {
+    const {session} = this;
+    const user = await Client.Account.searchForUser(session, username);
+
+    return {
+      username,
+      id: user.id,
+      isPrivate: user.params.isPrivate,
+      followerCount: user.params.followerCount
+    }
+  }
+
   async close() {
 
   }

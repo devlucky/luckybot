@@ -25,6 +25,7 @@ export interface User {
   id: string;
   username: string;
   isPrivate: boolean;
+  followerCount?: number;
 }
 
 export interface Strategy {
@@ -33,6 +34,7 @@ export interface Strategy {
   searchLocation(query: string): Promise<MediaLocation>;
   searchMediaByLocation(location: MediaLocation): Promise<Media[]>;
   getFollowers(accountId: string): Promise<User[]>;
+  getUser(username: string): Promise<User>;
   likeFollowersPhotos(accountId: string, options?: LikeFollowerOptions): Promise<Media[]>;
   close(): Promise<void>;
 }

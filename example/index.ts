@@ -12,7 +12,8 @@ const run = async () => {
   const bot = new LuckyBot(user, pass, {debug: true, cookiePath});
 
   await bot.login();
-  await likeFollowersPhotos(bot);
+  await getUser(bot, 'zzarcon');
+  // await likeFollowersPhotos(bot);
   // await likeHashtag(bot);
   console.log('CLOSE...');
   await bot.close();
@@ -27,6 +28,12 @@ const likeHashtag = async (bot: LuckyBot) => {
   const hastag = process.env.LUCKYBOT_HASTAG || 'travelphotography';
 
   await bot.likePhotos(hastag, {maxLikes: 5});
+}
+
+const getUser = async (bot: LuckyBot, username: string) => {
+  const user = await bot.getUser(username);
+
+  console.log(user)
 }
 
 run();
