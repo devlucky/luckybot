@@ -61,8 +61,8 @@ export class RestApi implements Strategy {
     return results;
   }
 
-  async likeTaggedMedias(hashtag: string, options: LikeOptions = {maxLikes: 20}): Promise<Media[]> {
-    const {maxLikes} = options;
+  async likeTaggedMedias(hashtag: string, options?: LikeOptions): Promise<Media[]> {
+    const {maxLikes} = {maxLikes: 20, ...options};
     const medias = await this.search(hashtag);
     console.log('likeMedias', {hashtag, length: medias.length, maxLikes})
 
@@ -120,7 +120,7 @@ export class RestApi implements Strategy {
       const medias = feedResultsToMedia(feed);
       const likedMedia = await this.likeMedias(medias, maxLikes);
 
-      totalLikedMedia.push(likedMedia);
+      totalLikedMedia.push(...likedMedia);
     }   
 
     return totalLikedMedia;
