@@ -1,4 +1,5 @@
 import LuckyBot from '../src';
+import {getAccount} from './accounts';
 
 const run = async () => {
   const user = process.env.LUCKYBOT_USER;
@@ -12,15 +13,16 @@ const run = async () => {
   const bot = new LuckyBot(user, pass, {debug: true, cookiePath});
 
   await bot.login();
-  await getUser(bot, 'zzarcon');
-  // await likeFollowersPhotos(bot);
+  await likeFollowersPhotos(bot);
   // await likeHashtag(bot);
   console.log('CLOSE...');
   await bot.close();
 };
 
 const likeFollowersPhotos = async (bot: LuckyBot) => {
-  const likedMedias = await bot.likeFollowersPhotos('5465909933', {maxLikes: 2});
+  const accountId = getAccount();
+  console.log('likeFollowersPhotos', {accountId});
+  const likedMedias = await bot.likeFollowersPhotos(accountId, {maxLikes: 2});
   console.log({likedMedias});
 }
 

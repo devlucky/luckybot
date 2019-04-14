@@ -64,3 +64,4 @@ src/**/*.json
 example/**/*.json
 dist
 debug.png
+example/accounts.ts
