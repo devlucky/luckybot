@@ -14,6 +14,7 @@ export interface LikeFollowerOptions {
 
 export interface StrategyOptions {
   cookiePath?: string;
+  proxyUrl?: string;
 }
 
 export interface MediaLocation {

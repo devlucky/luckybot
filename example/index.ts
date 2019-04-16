@@ -10,11 +10,12 @@ const run = async () => {
   }
 
   const cookiePath = `${__dirname}/cookies`;
+  // const proxyUrl = 'http://127.0.0.1:8213'
   const bot = new LuckyBot(user, pass, {debug: true, cookiePath});
 
   await bot.login();
-  await likeFollowersPhotos(bot);
-  // await likeHashtag(bot);
+  // await likeFollowersPhotos(bot);
+  await likeHashtag(bot);
   console.log('CLOSE...');
   await bot.close();
 };

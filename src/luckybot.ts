@@ -4,6 +4,7 @@ import { RestApi } from "./strategies/api";
 export interface LuckyBotOptions {
   debug?: boolean;
   cookiePath?: string;
+  proxyUrl?: string;
 }
 
 export interface LikeOptions {

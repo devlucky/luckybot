@@ -23,14 +23,19 @@ export class RestApi implements Strategy {
 
   async login(userName: string, password: string): Promise<Object> {
     const device = new Client.Device(userName);
-    const cookiePath = `${this.options.cookiePath}/${userName}.json`
-    console.log('login: exist cookie', {cookiePath}, existsSync(cookiePath))
-    const storage = new Client.CookieFileStorage(cookiePath);
-    const session: Object = await Client.Session.create(device, storage, userName, password)
+    const {cookiePath, proxyUrl} = this.options;
+    const fullCookiePath = `${cookiePath}/${userName}.json`
+    console.log('login: exist cookie', {fullCookiePath}, existsSync(fullCookiePath))
+    const storage = new Client.CookieFileStorage(fullCookiePath);
+    try {
+      const session: Object = await Client.Session.create(device, storage, userName, password, proxyUrl)
 
-    this.session = session;
-
-    return session;
+      this.session = session;
+      return session;
+    } catch (e) {
+      console.log('login error:', e)
+      return e;
+    }
   }
 
   async search(hashtag: string): Promise<Media[]> {
