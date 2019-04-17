@@ -25,7 +25,7 @@ export class RestApi implements Strategy {
     const device = new Client.Device(userName);
     const {cookiePath, proxyUrl} = this.options;
     const fullCookiePath = `${cookiePath}/${userName}.json`
-    console.log('login: exist cookie', {fullCookiePath}, existsSync(fullCookiePath))
+    console.log('login: ', {fullCookiePath, proxyUrl}, existsSync(fullCookiePath))
     const storage = new Client.CookieFileStorage(fullCookiePath);
     try {
       const session: Object = await Client.Session.create(device, storage, userName, password, proxyUrl)
