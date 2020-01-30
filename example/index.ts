@@ -1,5 +1,4 @@
 import LuckyBot from '../src';
-import {getAccount} from './accounts';
 
 const run = async () => {
   const user = process.env.LUCKYBOT_USER;
@@ -19,13 +18,6 @@ const run = async () => {
   console.log('CLOSE...');
   await bot.close();
 };
-
-const likeFollowersPhotos = async (bot: LuckyBot) => {
-  const accountId = getAccount();
-  console.log('likeFollowersPhotos', {accountId});
-  const likedMedias = await bot.likeFollowersPhotos(accountId, {maxLikes: 2});
-  console.log({likedMedias});
-}
 
 const likeHashtag = async (bot: LuckyBot) => {
   const hastag = process.env.LUCKYBOT_HASTAG || 'travelphotography';
